@@ -1,9 +1,12 @@
+import time
 from smiley import Smiley
 
 
 class Sad(Smiley):
+    BLUE = (0, 0, 255)
+
     def __init__(self):
-        super().__init__()
+        super().__init__(complexion=self.BLUE)
 
         self.draw_mouth()
         self.draw_eyes()
@@ -24,3 +27,17 @@ class Sad(Smiley):
         eyes = [10, 13, 18, 21]
         for pixel in eyes:
             self.pixels[pixel] = self.BLANK if wide_open else self.YELLOW
+
+    def blink(self, delay=0.25):
+
+        """
+        Makes the sad smiley blink once for a certain time.
+        It closes its eyes briefly and then opens them again after the delay.
+
+        :param delay: The time in seconds for how long the blink lasts.
+        """
+        self.draw_eyes(wide_open=False)  # Close the eyes
+        self.show()
+        time.sleep(delay)
+        self.draw_eyes(wide_open=True)  # Open the eyes again
+        self.show()
